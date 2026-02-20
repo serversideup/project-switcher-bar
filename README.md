@@ -52,7 +52,7 @@ The component ships as a raw `.vue` SFC — your Nuxt/Vite build compiles it nat
 
 ## Data Updates
 
-The `src/data.json` file is automatically updated by CI when products or open source projects change on serversideup.net. A GitHub Action automatically bumps the version and creates a new tag whenever `src/` changes.
+The `src/data.json` file is automatically updated by GitLab CI when products or open source projects change on serversideup.net. Since consuming sites install from `main`, they pick up the latest data on their next `yarn install`.
 
 ## Development
 
