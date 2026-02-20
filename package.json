@@ -1,0 +1,27 @@
+{
+  "name": "@serversideup/project-switcher-bar",
+  "version": "0.0.1",
+  "description": "ServerSideUp branded toolbar with product navigation for documentation sites",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "dev": "vite"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.3",
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "vite": "^6.2.0",
+    "vue": "^3.5.0"
+  }
+}
