@@ -20,7 +20,7 @@ jobs:
 
       - run: yarn build
 
-      - name: Commit dist
+      - name: Bump version, commit dist
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -28,6 +28,10 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to dist/"
           else
-            git commit -m "chore: rebuild dist"
-            git push
+            npm version patch --no-git-tag-version
+            git add package.json
+            VERSION=$(node -p "require('./package.json').version")
+            git commit -m "chore: rebuild dist (v$VERSION)"
+            git tag "v$VERSION"
+            git push && git push --tags
           fi
