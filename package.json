@@ -12,9 +12,6 @@
     "type": "git",
     "url": "https://github.com/serversideup/project-switcher-bar.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "files": [
     "src"
   ],
