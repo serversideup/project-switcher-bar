@@ -6,6 +6,10 @@ on:
     paths: ['src/**']
   workflow_dispatch:
 
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+          registry-url: 'https://registry.npmjs.org'
 
       - run: yarn install
 
@@ -34,4 +39,10 @@ jobs:
             git commit -m "chore: rebuild dist (v$VERSION)"
             git tag "v$VERSION"
             git push && git push --tags
+            echo "published=true" >> $GITHUB_OUTPUT
           fi
+        id: version
+
+      - name: Publish to npm
+        if: steps.version.outputs.published == 'true'
+        run: npm publish --access public --provenance
