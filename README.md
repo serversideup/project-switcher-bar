@@ -41,7 +41,7 @@ import { ProjectSwitcherBar } from '@serversideup/project-switcher-bar'
 </template>
 ```
 
-The component ships as a raw `.vue` SFC — your Nuxt/Vite build compiles it natively.
+The component ships pre-compiled — no special build configuration needed in your project.
 
 ## Migrating from ServerSideUp.vue
 
@@ -104,14 +104,16 @@ Then remove `'@vueuse/nuxt'` from the `modules` array in `nuxt.config.ts`.
 
 ## How It Works
 
+- The component is pre-compiled to plain JS via Vite library mode (`dist/index.mjs`) — works in any Vue/Nuxt project without needing to transpile `.vue` files
 - Product and open source data is baked into `src/data.json` (auto-updated by CI from the main serversideup.net content)
 - Logos are embedded as base64 data URIs — no external assets needed
 - Navigation links and social icons are hardcoded in the component
 - Uses `<a>` tags (not `<NuxtLink>`) so it works in any Vue project
+- The `src/` directory is included for Tailwind v4 class scanning via `@source`
 
 ## Data Updates
 
-The `src/data.json` file is automatically updated by GitLab CI when products or open source projects change on serversideup.net. Since consuming sites install from `main`, they pick up the latest data on their next `yarn install`.
+The `src/data.json` file is automatically updated by GitLab CI when products or open source projects change on serversideup.net. A GitHub Action then rebuilds `dist/` automatically. Since consuming sites install from `main`, they pick up the latest data on their next `yarn install`.
 
 ## Development
 
@@ -121,6 +123,14 @@ yarn dev
 ```
 
 Opens a Vite dev server with a preview page rendering the component.
+
+### Building
+
+```bash
+yarn build
+```
+
+Compiles the Vue component to `dist/index.mjs`. This is done automatically by the GitHub Action when `src/` changes on `main`.
 
 ## License
 
