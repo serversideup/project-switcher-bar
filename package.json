@@ -1,6 +1,6 @@
 {
   "name": "@serversideup/project-switcher-bar",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ServerSideUp branded toolbar with product navigation for documentation sites",
   "license": "MIT",
   "type": "module",
