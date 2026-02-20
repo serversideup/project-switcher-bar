@@ -43,6 +43,65 @@ import { ProjectSwitcherBar } from '@serversideup/project-switcher-bar'
 
 The component ships as a raw `.vue` SFC — your Nuxt/Vite build compiles it natively.
 
+## Migrating from ServerSideUp.vue
+
+If your project has a local `ServerSideUp.vue` component (the old hardcoded toolbar), follow these steps:
+
+### 1. Install the package
+
+```bash
+yarn add https://github.com/serversideup/project-switcher-bar
+```
+
+### 2. Add the Tailwind `@source` directive
+
+In your main CSS file (e.g. `app/assets/css/main.css`), add:
+
+```css
+@source "../node_modules/@serversideup/project-switcher-bar/src";
+```
+
+### 3. Update `app.vue`
+
+Replace the old component with an explicit import:
+
+```diff
+  <script setup>
++ import { ProjectSwitcherBar } from '@serversideup/project-switcher-bar'
+  </script>
+
+  <template>
+    <UApp>
+      <NuxtLoadingIndicator />
+-     <ServerSideUp />
++     <ProjectSwitcherBar />
+      <AppHeader />
+```
+
+> **Note:** If your project uses the `Global/` directory convention (e.g. Spin docs), replace `<GlobalServerSideUp />` instead.
+
+### 4. Delete the old component
+
+Remove the old file from whichever location it lives in your project:
+
+```bash
+# docker-php, amplitudejs, etc.
+rm app/components/ServerSideUp.vue
+
+# spin (uses Global/ subdirectory)
+rm app/components/Global/ServerSideUp.vue
+```
+
+### 5. Remove `@vueuse/nuxt` (optional)
+
+The old `ServerSideUp.vue` used `onClickOutside` from VueUse. This package uses a native `document.addEventListener` instead, so if `onClickOutside` was the only reason you had `@vueuse/nuxt` installed, you can remove it:
+
+```bash
+yarn remove @vueuse/nuxt
+```
+
+Then remove `'@vueuse/nuxt'` from the `modules` array in `nuxt.config.ts`.
+
 ## How It Works
 
 - Product and open source data is baked into `src/data.json` (auto-updated by CI from the main serversideup.net content)
