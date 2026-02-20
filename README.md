@@ -4,20 +4,8 @@ ServerSideUp branded toolbar with product navigation for documentation sites. Di
 
 ## Installation
 
-This package is installed directly from GitHub (no registry needed):
-
 ```bash
-# Always use the latest from main
-yarn add https://github.com/serversideup/project-switcher-bar
-
-# Or pin to a specific version tag
-yarn add https://github.com/serversideup/project-switcher-bar#v0.0.1
-```
-
-To update to the latest version later:
-
-```bash
-yarn upgrade @serversideup/project-switcher-bar
+yarn add @serversideup/project-switcher-bar
 ```
 
 ### Tailwind v4 Source Detection
@@ -50,7 +38,7 @@ If your project has a local `ServerSideUp.vue` component (the old hardcoded tool
 ### 1. Install the package
 
 ```bash
-yarn add https://github.com/serversideup/project-switcher-bar
+yarn add @serversideup/project-switcher-bar
 ```
 
 ### 2. Add the Tailwind `@source` directive
@@ -111,9 +99,28 @@ Then remove `'@vueuse/nuxt'` from the `modules` array in `nuxt.config.ts`.
 - Uses `<a>` tags (not `<NuxtLink>`) so it works in any Vue project
 - The `src/` directory is included for Tailwind v4 class scanning via `@source`
 
+## Automatic Updates with Dependabot
+
+To automatically receive PRs when a new version is published, add `.github/dependabot.yml` to your sub-project:
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/docs"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-name: "@serversideup/project-switcher-bar"
+```
+
+> **Note:** Change `directory` to match the location of your `package.json` (e.g. `"/"` if it's at the repo root, `"/docs"` if it's in a docs subdirectory).
+
+The `allow` key restricts Dependabot to only open PRs for this package. Without it, Dependabot would propose updates for all your npm dependencies.
+
 ## Data Updates
 
-The `src/data.json` file is automatically updated by GitLab CI when products or open source projects change on serversideup.net. A GitHub Action then rebuilds `dist/` automatically. Since consuming sites install from `main`, they pick up the latest data on their next `yarn install`.
+The `src/data.json` file is automatically updated by GitLab CI when products or open source projects change on serversideup.net. A GitHub Action then rebuilds `dist/`, bumps the version, and publishes to npm automatically.
 
 ## Development
 
